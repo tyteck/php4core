@@ -1,15 +1,18 @@
 FROM    php:7.2-cli
 
-LABEL   maintainer="Frederick Tyteca"
+# ====================================================
+# this image will produce one php 7.2 cli which will include everything 
+# needed to run pmt core.
 
+LABEL   maintainer="Frederick Tyteca"
 
 ENV     DEBIAN_FRONTEND=noninteractive
 
 # ====================================================
 # things to add 
-# ffmpeg : to convert audio
+# ffmpeg : required by youtube-dl
 # python3 : required by youtube-dl
-# curl to add composer/phpunit
+# wget to add composer/youtube-dl
 # zip used by composer install
 # locales : to set locales (logale-gen not found else)
 # msmtp : to send mail (replace ssmtp)
@@ -17,8 +20,8 @@ RUN     apt-get update -y && \
         apt-get install -y --no-install-recommends \
                 ffmpeg \
                 python3 \
-                curl \
-				zip \
+                wget \
+                zip \
                 locales \
                 msmtp && \
         rm -rf /var/lib/apt/lists/*;
@@ -34,9 +37,17 @@ RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && 
         update-locale LANG=en_US.UTF-8
 
 ENV     TZ="Europe/Paris" \
-        PATH="/app/vendor/bin:${PATH}" \
         LANG="en_US.UTF-8" \
         LANGUAGE="en_US:en" \
         LC_ALL="en_US.UTF-8"
 RUN     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
         echo $TZ > /etc/timezone 
+
+# Install youtube-dl
+RUN     sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl && \
+        sudo chmod a+rx /usr/local/bin/youtube-dl
+
+# Install composer dependencies
+COPY    ./installComposer.sh /var/opt/installComposer.sh
+RUN     chmod +x /var/opt/installComposer.sh
+RUN     /var/opt/installComposer.sh
