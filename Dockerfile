@@ -46,7 +46,8 @@ RUN     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
         echo $TZ > /etc/timezone 
 
 # Install youtube-dl
-RUN     wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl --quiet && \
+RUN     ln -s /usr/bin/python3 /usr/bin/python &&\
+		wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl --quiet && \
         chmod a+rx /usr/local/bin/youtube-dl
 
 # install PHPunit
