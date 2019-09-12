@@ -1,0 +1,42 @@
+FROM    php:7.2-cli
+
+LABEL   maintainer="Frederick Tyteca"
+
+
+ENV     DEBIAN_FRONTEND=noninteractive
+
+# ====================================================
+# things to add 
+# ffmpeg : to convert audio
+# python3 : required by youtube-dl
+# curl to add composer/phpunit
+# zip used by composer install
+# locales : to set locales (logale-gen not found else)
+# msmtp : to send mail (replace ssmtp)
+RUN     apt-get update -y && \
+        apt-get install -y --no-install-recommends \
+                ffmpeg \
+                python3 \
+                curl \
+				zip \
+                locales \
+                msmtp && \
+        rm -rf /var/lib/apt/lists/*;
+
+# installing required php modules
+RUN     docker-php-ext-install pdo pdo_mysql mysqli
+
+# ====================================================
+# setting timezone && locale
+
+RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+        dpkg-reconfigure --frontend=noninteractive locales && \
+        update-locale LANG=en_US.UTF-8
+
+ENV     TZ="Europe/Paris" \
+        PATH="/app/vendor/bin:${PATH}" \
+        LANG="en_US.UTF-8" \
+        LANGUAGE="en_US:en" \
+        LC_ALL="en_US.UTF-8"
+RUN     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+        echo $TZ > /etc/timezone 
