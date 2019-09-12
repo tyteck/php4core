@@ -44,8 +44,8 @@ RUN     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
         echo $TZ > /etc/timezone 
 
 # Install youtube-dl
-RUN     sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl && \
-        sudo chmod a+rx /usr/local/bin/youtube-dl
+RUN     wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl --quiet && \
+        chmod a+rx /usr/local/bin/youtube-dl
 
 # Install composer dependencies
 COPY    ./installComposer.sh /var/opt/installComposer.sh
