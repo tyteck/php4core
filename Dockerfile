@@ -49,6 +49,10 @@ RUN     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 RUN     wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl --quiet && \
         chmod a+rx /usr/local/bin/youtube-dl
 
+# install PHPunit
+RUN     wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit --quiet && \ 
+        chmod +x /usr/local/bin/phpunit
+
 # Install composer dependencies
 COPY    ./installComposer.sh /var/opt/installComposer.sh
 RUN     chmod +x /var/opt/installComposer.sh
