@@ -10,14 +10,16 @@ ENV     DEBIAN_FRONTEND=noninteractive
 
 # ====================================================
 # things to add 
+# git : used by gitlab-ci
 # ffmpeg : required by youtube-dl
 # python3 : required by youtube-dl
-# wget to add composer/youtube-dl
-# zip used by composer install
+# wget : to add composer/youtube-dl
+# zip : used by composer install
 # locales : to set locales (logale-gen not found else)
 # msmtp : to send mail (replace ssmtp)
 RUN     apt-get update -y && \
         apt-get install -y --no-install-recommends \
+                git \
                 ffmpeg \
                 python3 \
                 wget \
