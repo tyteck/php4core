@@ -1,4 +1,4 @@
-FROM    php:7.2-cli
+FROM    php:7.3-cli
 
 # ====================================================
 # this image will produce one php 7.2 cli which will include everything 
