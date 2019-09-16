@@ -20,8 +20,8 @@ ENV     DEBIAN_FRONTEND=noninteractive
 RUN     apt-get update -y && \
         apt-get install -y --no-install-recommends \
                 git \
-                ffmpeg \
-                python3 \
+#                ffmpeg \
+#                python3 \
                 wget \
                 zip \
                 locales \
@@ -46,9 +46,9 @@ RUN     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
         echo $TZ > /etc/timezone 
 
 # Install youtube-dl
-RUN     ln -s /usr/bin/python3 /usr/bin/python &&\
-		wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl --quiet && \
-        chmod a+rx /usr/local/bin/youtube-dl
+#RUN     ln -s /usr/bin/python3 /usr/bin/python &&\
+#		wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl --quiet && \
+#        chmod a+rx /usr/local/bin/youtube-dl        
 
 # install PHPunit
 RUN     wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit --quiet && \ 
