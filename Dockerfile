@@ -24,12 +24,15 @@ RUN     apt-get update -y && \
                 python3 \
                 wget \
                 zip \
+				unzip \
+				zlib1g-dev \ 
+				libzip-dev\
                 locales \
                 msmtp && \
         rm -rf /var/lib/apt/lists/*;
 
 # installing required php modules
-RUN     docker-php-ext-install pdo pdo_mysql mysqli
+RUN     docker-php-ext-install pdo pdo_mysql mysqli zip
 
 # ====================================================
 # setting timezone && locale
