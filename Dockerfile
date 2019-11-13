@@ -45,10 +45,6 @@ ENV     TZ="Europe/Paris" \
 RUN     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
         echo $TZ > /etc/timezone 
 
-# install PHPunit
-RUN     wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit --quiet && \ 
-        chmod +x /usr/local/bin/phpunit
-
 # Install composer dependencies
 COPY    ./installComposer.sh /var/opt/installComposer.sh
 RUN     chmod +x /var/opt/installComposer.sh
